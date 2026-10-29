@@ -1,81 +1,49 @@
-# ERP MIPYME
+# ERP MIPYME — Descargas
 
 Sistema de gestión integral (ERP) para micro, pequeñas y medianas empresas
-cubanas. Diseñado para **trabajar sin conexión a internet** y sincronizar
-automáticamente con el servidor central cuando la red vuelve.
+cubanas: **mayorista + minorista**, con POS que funciona **sin conexión a
+internet** y sincronización automática bidireccional (PowerSync + Neon
+PostgreSQL) cuando la red vuelve.
 
 ## Descargas
 
-| Plataforma | Archivo | Requisitos |
-|------------|---------|------------|
-| Android | `ErpMipyme-*.apk` | Android 8.0 (API 26) o superior |
-| Windows | `ErpMipyme-*.msi` (instalador) / `*.zip` (portátil) | Windows 10/11 x64 |
-| Web | Panel de administración en línea (PWA) | Navegador moderno |
+| Plataforma | Archivo del Release | Requisitos |
+|------------|--------------------|------------|
+| Android | `ERP-MIPYME-v*.*.*.apk` (firmado) | Android 8.0 (API 26)+, permisos de impresora Bluetooth/USB |
+| Windows | `ERP-MIPYME_*.msi` / `*.exe` (NSIS, WebView2 embebido) | Windows 10/11 x64 |
+| Web/PWA | Enlace en cada Release (Vercel) | Navegador moderno (Chrome/Edge) |
 
-Ir a la página de [Releases](https://github.com/ReidelAlcantara/erp-mipyme-releases/releases)
-para descargar la última versión.
+Ir a la página de [**Releases**](https://github.com/ReidelAlcantara/erp-mipyme-releases/releases)
+y descargar el archivo de tu plataforma desde el último release publicado.
 
-> Las funciones offline (POS, inventario, impresión de tickets) viven en las
-> aplicaciones nativas de Android y Windows. El panel web es el centro de
-> administración en línea; su URL se anuncia en cada Release.
+> La versión **Web/PWA** se instala desde el propio navegador: abre el enlace,
+> menú de Chrome → «Instalar aplicación». Funciona offline tras la primera
+> carga (los datos viven en SQLite local dentro del navegador/dispositivo).
 
-## Características principales
+## Características
 
-- **POS offline**: venta rápida con lector de códigos, varias formas de pago y
-  ticket ESC/POS; la cola persistente de ventas garantiza que nada se pierda
-  si la red cae a mitad de la jornada.
-- **Inventario**: doble depósito (venta / trastienda), kardex con costeo
-  promedio ponderado, mínimos y alertas de reposición.
-- **Contabilidad cubana**: plan de cuentas según la Resolución 494/2016,
-  asientos automáticos por venta, diario, mayor, balance de comprobación y
-  cierre de ejercicio.
-- **Multi-moneda**: CUP, USD y MLC con tipo de cambio configurable; la
-  contabilidad se lleva uniformemente en CUP.
-- **RRHH**: empleados, asistencia y cálculo de pago.
-- **Sincronización bidireccional** entre dispositivos y el servidor central
-  (PostgreSQL en Neon) vía API propia.
-- **Usuarios y roles**: cajero, dependiente, contador y administrador.
-- **Tema neón oscuro** pensado para pantallas táctiles y uso prolongado.
+- 🔐 **Roles**: Administrador, Dependiente (POS), Económico (contabilidad),
+  Almacenero (inventario) — inicio de sesión con usuario + PIN.
+- 🧾 **POS offline**: ventas a mayor y menor con impresión de tickets
+  térmicos ESC/POS (USB/TCP en Windows, Bluetooth/USB en Android).
+- 📊 **Contabilidad cubana** según Resolución 494/2016: nomenclador de
+  cuentas, libro diario, asientos con partida doble y cierre de ejercicio.
+- 📦 **Inventario multi-almacén** con mínimos, trazabilidad de movimientos
+  y ajustes.
+- 👥 **RRHH**: ficha de empleados y control de asistencia.
+- 🏷️ **Branding configurable**: nombre y logo del negocio en la app y en
+  todos los tickets impresos.
+- 🔄 **Sincronización offline-first**: todos los dispositivos del negocio
+  comparten los mismos datos vía PowerSync; las ventas hechas sin internet
+  se encolan y suben automáticamente al reconectar.
 
 ## Instalación
 
-### Android
+**Android**: descarga el `.apk` y ábrelo (permite «Instalar apps desconocidas»
+si el sistema lo pide). Conecta la impresora térmica por Bluetooth o USB OTG.
 
-1. Descargue el archivo `ErpMipyme-*.apk` del último Release.
-2. Abra el archivo; si es la primera vez, permita *Instalar apps desconocidas*
-   para su navegador o gestor de archivos.
-3. Instale y abra la aplicación.
+**Windows**: ejecuta el `.msi` (o el `.exe` del instalador NSIS) y sigue el
+asistente. Las impresoras USB/TCP se detectan desde la propia aplicación.
 
-### Windows
-
-1. Descargue `ErpMipyme-*.msi` (instalador) o `ErpMipyme-*.zip` (portátil).
-2. MSI: doble clic y siga el asistente. Portátil: descomprima y ejecute
-   `ErpMipyme.UI.exe`.
-
-## Verificación de integridad
-
-Cada Release incluye un archivo `SHA256SUMS.txt`. Verifique antes de instalar:
-
-```bash
-# Linux / macOS / Git Bash
-sha256sum -c SHA256SUMS.txt
-```
-
-```powershell
-# Windows (PowerShell)
-Get-FileHash ErpMipyme-*.apk -Algorithm SHA256
-```
-
-## Primer acceso
-
-Usuario: `admin` — PIN: `1234`. El sistema exige cambiar el PIN en el primer
-inicio de sesión.
-
-## Soporte
-
-Abra un [issue](https://github.com/ReidelAlcantara/erp-mipyme-releases/issues) para
-reportar errores o solicitar funcionalidades.
-
----
-
-Publicado por [Reidel Alcantara Castellano](https://github.com/ReidelAlcantara).
+**Soporte**: el código fuente y la documentación técnica viven en el
+repositorio privado del proyecto.
